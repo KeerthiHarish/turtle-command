@@ -48,4 +48,38 @@ module.exports = class Animal {
         break
     }
   }
+
+  canProceed (direction) {
+    let {
+      _xCord: xCord,
+      _yCord: yCord,
+      _obstacles: obstacles
+    } = this._position
+    let returnValue = true
+    obstacles.forEach((obstacle) => {
+      switch (direction) {
+        case 'N':
+          if ((xCord == obstacle.x) && (yCord + 1 == obstacle.y)) {
+            return false
+          }
+          break
+        case 'S':
+          if ((xCord == obstacle.x) && (yCord - 1 == obstacle.y)) {
+            return false
+          }
+          break
+        case 'W':
+          if ((xCord - 1 == obstacle.x) && (yCord == obstacle.y)) {
+            return false
+          }
+          break
+        case 'E':
+          if ((xCord + 1 == obstacle.x) && (yCord == obstacle.y)) {
+            return false
+          }
+          break
+      }
+    })
+    return true
+  }
 }

@@ -7,17 +7,22 @@ const inputInterface = readline.createInterface({
   output: process.stdout
 })
 
-inputInterface.question("What are turtle's movements? ", (movements) => {
-  console.log("Turtle's current state: ", getState(movements))
-  inputInterface.close()
+inputInterface.question('Enter world size: ', (worldSize) => {
+  inputInterface.question("What are turtle's movements? ", (movements) => {
+    console.log("Turtle's current state: ", getState(movements, worldSize))
+    inputInterface.close()
+  })
 })
 
-getState = (movements) => {
-  let world = new World(1, 1)
+getState = (movements, worldSize) => {
+  let world = new World(1, 1, worldSize)
   let turtle = new Turtle(1, 'N', world)
   movements.split('').forEach((movement) => {
+    movement = movement.toUpperCase()
     if (movement == 'F') {
-      turtle.getPosition().updatePosition(turtle.getDirection(), turtle.getStepCount())
+      if (turtle.canProceed(turtle.getDirection())) {
+        turtle.getPosition().updatePosition(turtle.getDirection(), turtle.getStepCount())
+      }
     } else {
       turtle.updateDirection(movement)
     }
